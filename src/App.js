@@ -1,25 +1,39 @@
-import logo from './logo.svg';
+import React,{useState} from 'react'
 import './App.css';
+import Product from './components/Product';
+import ProductInput from './components/ProductInput';
+import ProductWorth from './components/ProductWorth';
 
-function App() {
+const App = () => {
+  const [productinput, setproductinput] = useState([])
+  
+
+  const submithandler=(id,name,price,item,key)=>{
+  setproductinput((prev)=>{
+    return [...prev,{id:id,name:name,price:price,item:item,key:key,count:1}]
+     
+    
+  })
+  
+  }
+  const deletehandler=(d)=>{
+    setproductinput((prev)=>{
+      const updatedelete=prev.filter(delet =>delet.key!==d);
+      return updatedelete;
+    })
+
+  }
+  
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div style={{textAlign:'center'}}>
+      <Product submit={submithandler}></Product>
+      <ProductWorth addprice={productinput} ></ProductWorth>
+      <ProductInput style={{marginRight:"auto",marginLeft:"auto"}} onsubmit={productinput} delete={deletehandler}></ProductInput>
+      
     </div>
   );
-}
+};
 
 export default App;
