@@ -1,39 +1,28 @@
-import React,{useState} from 'react'
-import './App.css';
-import Product from './components/Product';
-import ProductInput from './components/ProductInput';
-import ProductWorth from './components/ProductWorth';
+import React,{useState} from "react";
+import Header from "./components/Layout/Header";
+import Cart from "./components/Cart/Cart";
+import CartProvider from "./Store/CartProvider";
+import MealItemForm from "./components/Meals/MealItem/MealItemForm";
 
-const App = () => {
-  const [productinput, setproductinput] = useState([])
-  
 
-  const submithandler=(id,name,price,item,key)=>{
-  setproductinput((prev)=>{
-    return [...prev,{id:id,name:name,price:price,item:item,key:key,count:1}]
-     
-    
-  })
-  
+function App() {
+  const [cartisshown, setcartisshown] = useState(false);
+  const showcarthandler=()=>{
+   setcartisshown(true)
   }
-  const deletehandler=(d)=>{
-    setproductinput((prev)=>{
-      const updatedelete=prev.filter(delet =>delet.key!==d);
-      return updatedelete;
-    })
-
+  const hidecarthandler=()=>{
+  setcartisshown(false)
   }
-  
-
-
   return (
-    <div style={{textAlign:'center'}}>
-      <Product submit={submithandler}></Product>
-      <ProductWorth addprice={productinput} ></ProductWorth>
-      <ProductInput style={{marginRight:"auto",marginLeft:"auto"}} onsubmit={productinput} delete={deletehandler}></ProductInput>
-      
-    </div>
+
+    <CartProvider>
+      {cartisshown && <Cart hide={hidecarthandler}></Cart>}
+      <Header shown={showcarthandler} ></Header>
+      <main>
+        <MealItemForm></MealItemForm>
+      </main>
+    </CartProvider>
   );
-};
+}
 
 export default App;
