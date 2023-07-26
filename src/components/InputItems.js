@@ -1,5 +1,6 @@
 import React from "react";
 import InputForm from "./InputForm";
+import Card from "./UI/Card";
 const productsArr = [
   {
     title: "Colors",
@@ -36,16 +37,19 @@ const productsArr = [
 
 const InputItems = () => {
   return (
-  <div>
+    
+    
+  <Card >
     {productsArr.map((item)=>(
-        <>
+        
         <InputForm key={Math.random().toString()} title={item.title} price={item.price} image={item.imageUrl}></InputForm>
         
-        </>
+      
     ))}
    
    
-  </div>
+  </Card>
+  
   )
 };
 

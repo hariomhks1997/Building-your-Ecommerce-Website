@@ -1,45 +1,52 @@
 .nav{
     display:flex;
     height:5rem;
-    background-color: white;
+    background-color:pink;
+    position: fixed;
+    width: 100%;
 }
 .nav li{
     list-style: none;
     align-items: center;
     padding-block:inherit;
-    border-radius: 100px;
+    border-radius: 12px;
+    text-align: center;
+    justify-content: space-between;
+    padding-block: 0.8rem;
+    margin-top: 1rem;
+    width: fit-content;
+    
+    
 }
 .li1{
-    margin-left: 40%;
+   
     color:black;
     background-color:gray;
     height: fit-content;
     margin-top: 2rem;
+    margin-left: 10rem;
+    
 
     
 
 }
 .li2{
+    
     margin: auto;
     color:black;
     background-color:gray;
     height: fit-content; 
-    margin-top: 2rem; 
+    margin-top: 2rem;
+    margin-left: 5rem;
     
 }
 .li3{
-    margin-right: 40%;
+    
     color:black;
     background-color:gray;
     height: fit-content; 
     margin-top: 2rem;
+    margin-right: 60rem;
     
 
-}
-.button{
-    color:red;
-    background-color: cornflowerblue;
-    height: fit-content;
-    margin-top: 2rem; 
-    border-radius: 1rem;
 }
