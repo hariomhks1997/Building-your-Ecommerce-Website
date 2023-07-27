@@ -10,15 +10,16 @@ const cartReducer=(state,action)=>{
     //const upadteItems=state.items.concat(action.item);
     const updatetotalamount=state.totalamount+action.item.price ;
     const existingcartitemindex=state.items.findIndex(
-      (item)=>item.id===action.item.id
+      (item)=>item.title===action.item.title
     );
     const existingcartitem=state.items[existingcartitemindex];
+    console.log(existingcartitem)
     
     let updateditems;
     if(existingcartitem){
       const updateditem={
         ...existingcartitem,
-        amount:existingcartitem.amount+1
+        quantity:existingcartitem.quantity+1
       }
       updateditems=[...state.items];
       updateditems[existingcartitemindex]=updateditem;
@@ -43,11 +44,11 @@ const cartReducer=(state,action)=>{
     const existingitem=state.items[existingcartitemindex];
     const updatetotalamount=state.totalamount-existingitem.price;
     let updateditems;
-    if (existingitem.amount===1){
+    if (existingitem.quantity===1){
     updateditems=state.items.filter(item=>item.id!==action.id);
     }
     else{
-     const updateditem={...existingitem,amount:existingitem.amount-1};
+     const updateditem={...existingitem,quantity:existingitem.quantity-1};
      updateditems=[...state.items];
      updateditems[existingcartitemindex]=updateditem;
     }
