@@ -1,0 +1,50 @@
+.nav{
+    display:flex;
+    height:5rem;
+    background-color:pink;
+    position: fixed;
+    width: 100%;
+    margin:'20px';
+    padding: '10px';
+    text-align: center;
+    list-style: none;
+    justify-content: space-between;
+
+}
+.nav li{
+    
+    margin-top: 2rem;
+   
+    
+    
+    
+}
+.li1{
+   
+    
+    margin-top: 2rem;
+    margin-left: 10rem;
+    
+    
+
+    
+
+}
+.li2{
+    
+    
+    margin-top: 2rem;
+    margin-left: 10rem;
+    
+    
+}
+.li3{
+    
+   
+    margin-top: 2rem;
+    margin-left: 10rem;
+
+    
+    
+
+}
