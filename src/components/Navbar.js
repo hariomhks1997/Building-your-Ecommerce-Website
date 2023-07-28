@@ -1,6 +1,6 @@
 import React,{useContext} from 'react';
 import classes from './Navbar.module.css'
-import Cart from './Cart';
+import Cart from './Cart/Cart';
 import CartContext from '../Store/Cart-context';
 
 
@@ -12,10 +12,10 @@ const Navbar = (props) => {
   ))
   return (
     <div className={classes.nav}>
-        <li className={classes.li1}><a href='/'>Home</a></li>
-        <li className={classes.li2}><a href='/'>Store</a></li>
-        <li className={classes.li3}><a href='/'>About</a></li>
-        <h4 style={{marginLeft:'0.1rem'}}>{quantity}</h4>
+        <li className={classes.li1}><a href='/' >Home</a></li>
+        <li className={classes.li2}><a href='/Store'>Store</a></li>
+        <li className={classes.li3}><a href='/About'>About</a></li>
+        <h4 style={{marginLeft:'50rem'}}>{quantity}</h4>
         <Cart  shown={props.shown}></Cart>
         
     </div>

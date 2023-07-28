@@ -4,27 +4,27 @@
     background-color:pink;
     position: fixed;
     width: 100%;
+    margin:'20px';
+    padding: '10px';
+    text-align: center;
+    list-style: none;
+    justify-content: space-between;
+
 }
 .nav li{
-    list-style: none;
-    align-items: center;
-    padding-block:inherit;
-    border-radius: 12px;
-    text-align: center;
-    justify-content: space-between;
-    padding-block: 0.8rem;
-    margin-top: 1rem;
-    width: fit-content;
+    
+    margin-top: 2rem;
+   
+    
     
     
 }
 .li1{
    
-    color:black;
-    background-color:gray;
-    height: fit-content;
+    
     margin-top: 2rem;
     margin-left: 10rem;
+    
     
 
     
@@ -32,21 +32,19 @@
 }
 .li2{
     
-    margin: auto;
-    color:black;
-    background-color:gray;
-    height: fit-content; 
+    
     margin-top: 2rem;
-    margin-left: 5rem;
+    margin-left: 10rem;
+    
     
 }
 .li3{
     
-    color:black;
-    background-color:gray;
-    height: fit-content; 
+   
     margin-top: 2rem;
-    margin-right: 60rem;
+    margin-left: 10rem;
+
+    
     
 
 }
