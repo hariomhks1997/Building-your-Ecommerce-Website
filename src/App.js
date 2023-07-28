@@ -1,41 +1,37 @@
-import React, { useState } from "react";
-import Navbar from "./components/Navbar";
-import InputItems from "./components/Itemstore/InputItems";
-import CartItem from "./components/Cart/CartItem";
-import CartProvider from "./Store/CartProvider";
-import {BrowserRouter as Main,Route,Routes} from 'react-router-dom';
-import Home from "./Home";
-import About from "./About";
+import React,{useState} from 'react';
+
+import MoviesList from './components/MoviesList';
+import './App.css';
 
 function App() {
-  const [shown, setshown] = useState(false);
-  const shownhandler = () => {
-    setshown(true);
-  };
-  const hidehandler = () => {
-    setshown(false);
-  };
+  const [movies, setmovies] = useState([])
+  async function fetchMoviesHandler(){
+    await fetch('https://swapi.dev/api/films/').then(response=>{
+      return response.json();
+    }).then(data=>{
+      const transformedMovies=data.results.map(moviedata=>{
+        return {
+          id:moviedata.episode_id,
+          title:moviedata.title,
+          openingText:moviedata.opening_crawl,
+          releaseDate:moviedata.release_date
 
+
+        }
+      })
+      setmovies(transformedMovies);
+    });
+  }
+ 
   return (
-   
-    <CartProvider>
-     
-      
-      
-      <Navbar shown={shownhandler}></Navbar>
-      <hr></hr>
-      {shown && <CartItem hide={hidehandler}></CartItem>}
-      <Main>
-      <Routes>
-      <Route exact path='/Store' element={<InputItems></InputItems>}></Route>
-     <Route exact path='/' element={<Home></Home>} ></Route>
-     <Route exact path='/About' element={<About></About>} ></Route>
-      
-      </Routes>
-      </Main>
-      
-    </CartProvider>
-    
+    <React.Fragment>
+      <section>
+        <button onClick={fetchMoviesHandler}>Fetch Movies</button>
+      </section>
+      <section>
+        <MoviesList movies={movies} />
+      </section>
+    </React.Fragment>
   );
 }
 
