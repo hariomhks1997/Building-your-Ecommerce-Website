@@ -1,9 +1,10 @@
 import './App.css';
-import { BrowserRouter as Main ,Route,Routes } from 'react-router-dom';
+import { BrowserRouter as Main ,Route,Routes, } from 'react-router-dom';
 import MainHeader from './components/MainHeader';
 import Form from './Pages/Form';
 import Welcome from './Pages/Welcome';
 import Product from './Pages/Product';
+import ProductDetail from './Pages/ProductDetail';
 
 function App() {
   const formadder=async (form)=>{
@@ -18,12 +19,14 @@ function App() {
     <div className="App">
       <Main>
       <MainHeader></MainHeader>
+      
         <Routes>
           
     
     <Route exact path='/welcome' element={<Welcome></Welcome>}></Route>
     <Route exact path='/form' element={<Form addform={formadder}></Form>}></Route>
     <Route exact path='/product' element={<Product></Product>}></Route>
+    <Route exact path='/productdetail/:productId' element={<ProductDetail></ProductDetail>}></Route>
   
     
     
