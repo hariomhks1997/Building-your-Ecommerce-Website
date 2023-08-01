@@ -1,41 +1,28 @@
-import './App.css';
-import { BrowserRouter as Main ,Route,Routes, } from 'react-router-dom';
-import MainHeader from './components/MainHeader';
-import Form from './Pages/Form';
-import Welcome from './Pages/Welcome';
-import Product from './Pages/Product';
-import ProductDetail from './Pages/ProductDetail';
+import {Routes, Route } from 'react-router-dom';
+
+import Layout from './components/Layout/Layout';
+import UserProfile from './components/Profile/UserProfile';
+import AuthPage from './pages/AuthPage';
+import HomePage from './pages/HomePage';
 
 function App() {
-  const formadder=async (form)=>{
-  await fetch('https://reacthariom-default-rtdb.firebaseio.com/form.json',{
-  method:'Post',
-  body:JSON.stringify(form),
-  'Content-type':'application/json'
-
-    })
-  }
   return (
-    <div className="App">
-      <Main>
-      <MainHeader></MainHeader>
-      
-        <Routes>
+    <Layout>
+      <>
+      <Routes>
+        <Route exact path='/' element={<HomePage />}>
           
-    
-    <Route exact path='/welcome' element={<Welcome></Welcome>}></Route>
-    <Route exact path='/form' element={<Form addform={formadder}></Form>}></Route>
-    <Route exact path='/product' element={<Product></Product>}></Route>
-    <Route exact path='/productdetail/:productId' element={<ProductDetail></ProductDetail>}></Route>
-  
-    
-    
-    </Routes>
-    </Main>
-
-      
-    </div>
+        </Route>
+        <Route exact path='/auth' element={<AuthPage />}>
+          
+        </Route>
+        <Route exact path='/profile' element={<UserProfile />}>
+          
+        </Route>
+      </Routes>
+      </>
+    </Layout>
   );
 }
 
-export default App
+export default App;
