@@ -11,13 +11,20 @@ logout:()=>{}
 
 
 export const AuthContextProvider=(props)=>{
-    const [token,settoken]=useState(null);
+    const initialtoken=localStorage.getItem('token')
+    const [token,settoken]=useState(initialtoken);
     const userIsLoggedIn=!!token;
     const loginhandler=(token)=>{
-        settoken(token)
+        
+
+        settoken(token);
+        localStorage.setItem('token',token);
     }
     const logouthandler=()=>{
+      
+      
       settoken(null)
+      localStorage.removeItem('token');
     }
     const contextvalue={
         token:token,
