@@ -1,10 +1,12 @@
-import { useState,useRef } from 'react';
+import { useState,useRef,useContext } from 'react';
 
 import classes from './AuthForm.module.css';
+import AuthContext from '../../store/auth-context';
 
 const AuthForm = () => {
   const emailinputref = useRef('');
   const passwordinputref = useRef('');
+  const authctx = useContext(AuthContext);
   const [isLogin, setIsLogin] = useState(true);
   const [isLoading, setisLoading] = useState(false)
 
@@ -17,10 +19,14 @@ const AuthForm = () => {
     const enteredpassword=passwordinputref.current.value;
     //optionla :Add validation
     setisLoading(true)
+    let url;
     if(isLogin){
-
+     url='https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAz3m7AYKNKO0fdAzD5nOCyTT-6dTFAzy4'
     }else{
-      fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAz3m7AYKNKO0fdAzD5nOCyTT-6dTFAzy4',{
+      
+      url='https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAz3m7AYKNKO0fdAzD5nOCyTT-6dTFAzy4'
+    }
+    fetch(url,{
         method:'Post',
         body:JSON.stringify({
           email:enteredemail,
@@ -30,25 +36,30 @@ const AuthForm = () => {
         headers:{
           'Content-type':'application/json'
         }
-      }).then(res=>{
+      }).then((res) =>{
         setisLoading(false);
         if(res.ok){
           //...
+          return res.json();
           
         }else{
-          return res.json().then(data=>{
+          return res.json().then((data)=>{
             //show an error modal
             let errorMessage='Authentician failed';
             // if(data && data.error && data.error.message){
             //   errorMessage=data.error.message;
             // }
-            alert(errorMessage);
+            
+            throw new Error(errorMessage)
             
           })
         }
+      }).then((data)=>{
+        authctx.login(data.idToken); 
       })
-       
-    }
+      .catch((err)=>{
+        alert(err.message)
+      });
     
 
   }
