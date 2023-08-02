@@ -1,8 +1,10 @@
 import AuthContext from '../../store/auth-context';
 import classes from './ProfileForm.module.css';
 import { useRef,useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const ProfileForm = () => {
+  const history=useNavigate();
   const authctx = useContext(AuthContext)
   const newPasswordInputref=useRef();
   const submithandler=(event)=>{
@@ -23,7 +25,8 @@ const ProfileForm = () => {
         }
   }).then((res)=>{
     //asumption:always suceeds!
-    
+    history('/')
+
   })
   }
   return (
