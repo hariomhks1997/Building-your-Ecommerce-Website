@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import classes from "./Navbar.module.css";
 import Cart from "./Cart/Cart";
 import CartContext from "../Store/Cart-context";
-import { useNavigate } from "react-router-dom";
+import { useNavigate,NavLink } from "react-router-dom";
 
 const Navbar = (props) => {
   const cartctx = useContext(CartContext);
@@ -17,20 +17,20 @@ const Navbar = (props) => {
   return (
     <div className={classes.nav}>
       <li className={classes.li1}>
-        <a href="/">Home</a>
+        <NavLink to="/">Home</NavLink>
       </li>
 
       <li className={classes.li3}>
-        <a href="/About">About</a>
+        <NavLink to="/About">About</NavLink>
       </li>
       {cartctx.isLoggedIn && (
         <li className={classes.li2}>
-          <a href="/Store">Store</a>
+          <NavLink to="/Store">Store</NavLink>
         </li>
       )}
       {!cartctx.isLoggedIn && (
         <li className={classes.li1}>
-          <a href="/login">Login</a>
+          <NavLink to="/login">Login</NavLink>
         </li>
       )}
       {cartctx.isLoggedIn && (

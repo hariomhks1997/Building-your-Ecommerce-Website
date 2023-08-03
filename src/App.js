@@ -9,7 +9,9 @@ import About from "./About";
 import LoginForm from "./components/Itemstore/LoginForm";
 
 
+
 function App() {
+  
   
   const [shown, setshown] = useState(false);
   const shownhandler = () => {
@@ -29,9 +31,9 @@ function App() {
       <Main>
       <Navbar shown={shownhandler}></Navbar>
       <hr></hr>
-      {shown && <CartItem hide={hidehandler}></CartItem>}
+     { shown && <CartItem hide={hidehandler}></CartItem>}
       <Routes>
-      <Route exact path='/login' element={<LoginForm></LoginForm>} ></Route>
+     <Route exact path='/login' element={<LoginForm></LoginForm>} ></Route>
       <Route exact path='/Store' element={<InputItems></InputItems>}></Route>
      <Route exact path='/' element={<Home></Home>} ></Route>
      <Route exact path='/About' element={<About></About>} ></Route>
