@@ -18,6 +18,7 @@ useEffect(() => {
  const email=localStorage.getItem('emailtoken')
  showuser(email)
  console.log(email)
+ // eslint-disable-next-line
 }, [])
 function showuser(email){
   axios.get(`https://crudcrud.com/api/99cbe24f914e433fa63236049ace8da4/${email}`)
