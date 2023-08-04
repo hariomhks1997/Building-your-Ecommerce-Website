@@ -1,21 +1,55 @@
-import React,{useContext} from 'react';
+import React,{useContext,} from 'react';
 import classes from './InputForm.module.css';
 import CartContext from '../../Store/Cart-context';
+import axios from 'axios';
+
+
 
 const InputForm = (props) => {
   const cartctx = useContext(CartContext);
-  const submithandler=(event)=>{
+  
+ 
+  
+ 
+ 
+  
+  const submithandler= async (event)=>{
     event.preventDefault();
-    const sumary={
-      id:Math.random().toString(),
-      title:props.title,
-      image:props.image,
-      price:props.price,
-      quantity:+1
+    
+      let id=Math.random().toString();
+      let title=props.title;
+      let image=props.image;
+      let price=props.price;
+      let quantity=+1;
 
+   
+    const add={
+      id,
+      title,
+      image,
+      price,
+      quantity
     }
-    cartctx.additem(sumary)
+    let email=window.localStorage.getItem('emailtoken')
+    console.log(email)
+    
+    try {
+      const post = await axios.post(`https://crudcrud.com/api/99cbe24f914e433fa63236049ace8da4/${email}`,add)
+      console.log(post)
+      
+      cartctx.additem(post.data)
+      
+    
+
+  } catch (err) {
+      console.log(err)
   }
+   // cartctx.additem(sumary)
+   
+  }
+  
+  
+  
 
 
   return (

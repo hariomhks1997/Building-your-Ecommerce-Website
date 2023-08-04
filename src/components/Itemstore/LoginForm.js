@@ -2,6 +2,8 @@ import React,{useRef,useContext,useState} from 'react'
 import CartContext from '../../Store/Cart-context';
 import { useNavigate } from 'react-router-dom';
 
+
+
 const LoginForm = () => {
   const [isLogin, setislogin] = useState(true)
   const changemode=()=>{
@@ -54,7 +56,15 @@ const LoginForm = () => {
           })
         }
       }).then((data)=>{
-        authctx.login(data.idToken); 
+        const expirationtime=new Date(new Date().getTime()+(+data.expiresIn*1000))
+        
+        authctx.login(data.idToken,data.email.slice(0,-10),expirationtime.toISOString()); 
+        //authctx.emailtoken(data.email.slice(0,-10))
+        console.log(data.email)
+        
+        const email=data.email.slice(0,-10);
+        console.log(email)
+        
         history('/store');
       })
       .catch((err)=>{

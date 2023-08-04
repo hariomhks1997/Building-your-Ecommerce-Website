@@ -7,15 +7,17 @@ import { useNavigate,NavLink } from "react-router-dom";
 const Navbar = (props) => {
   const cartctx = useContext(CartContext);
   const navigate = useNavigate();
-
+  
   let id;
   const logouthandler = () => {
     id = cartctx;
     id.logout();
     navigate("/");
+   
   };
   return (
     <div className={classes.nav}>
+      
       <li className={classes.li1}>
         <NavLink to="/">Home</NavLink>
       </li>
