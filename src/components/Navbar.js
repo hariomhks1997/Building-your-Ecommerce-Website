@@ -12,7 +12,10 @@ const Navbar = (props) => {
   const logouthandler = () => {
     id = cartctx;
     id.logout();
-    navigate("/");
+    setTimeout(() => {
+      navigate('/')
+    }, 3000);
+    
    
   };
   return (
@@ -30,6 +33,9 @@ const Navbar = (props) => {
           <NavLink to="/Store">Store</NavLink>
         </li>
       )}
+     
+        
+     
       {!cartctx.isLoggedIn && (
         <li className={classes.li1}>
           <NavLink to="/login">Login</NavLink>

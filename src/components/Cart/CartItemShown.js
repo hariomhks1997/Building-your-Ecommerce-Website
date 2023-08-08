@@ -9,6 +9,7 @@ const CartItemShown = (props) => {
     cartctx.removeitem(props.remove)
     
   }
+  console.log(props.id)
   return (
     <div>
     <hr></hr>
@@ -20,6 +21,7 @@ const CartItemShown = (props) => {
     <img src={props.image} alt='hd' style={{marginTop:'0.5rem',maxHeight:'5rem',width:'10rem',marginLeft:'3rem'}}/>
 
     <div style={{marginTop:'1.5rem',marginLeft:'5rem'}}>{props.quantity}</div>
+   
     
     <li style={{marginTop:'1.5rem',marginLeft:'7rem'}}>Rs:{props.price} </li>
     <button type='submit' style={{color:'red'}} >Remove</button>

@@ -75,7 +75,7 @@ const LoginForm = () => {
 
     }
   return (
-    <div >
+    <div>
       
         <form onSubmit={submithandler} style={{color:'black',textAlign:'center',background:'white',height:'auto',marginTop:'10rem',padding:'8rem'}}>
         <h2>{isLogin?'Login':'SignUp'}</h2>

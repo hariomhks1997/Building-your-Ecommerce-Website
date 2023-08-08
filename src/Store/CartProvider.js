@@ -1,136 +1,164 @@
-import React,{useReducer,useState,} from 'react';
-import CartContext from './Cart-context';
+import React, { useState ,useEffect} from "react";
+import CartContext from "./Cart-context";
+import axios from "axios";
 
-const defaultcartState={
-  items:[],
-  totalamount:0
-}
 
-const cartReducer=(state,action)=>{
-  if(action.type==='AddItem'){
-    //const upadteItems=state.items.concat(action.item);
-    const updatetotalamount=state.totalamount+action.item.price ;
-    const existingcartitemindex=state.items.findIndex(
-      (item)=>item.title===action.item.title
-    );
-    const existingcartitem=state.items[existingcartitemindex];
-    console.log(existingcartitem)
-    
-    let updateditems;
-    if(existingcartitem){
-      const updateditem={
-        ...existingcartitem,
-        quantity:existingcartitem.quantity+1
-      }
-      updateditems=[...state.items];
-      updateditems[existingcartitemindex]=updateditem;
-    }
-    else{
-      updateditems=state.items.concat(action.item);
-    }
-    
-  
-     
-    return {
-      items:updateditems,
-      totalamount:updatetotalamount
-    }
-    
-  }
-  if(action.type==='remove'){
-
-    const existingcartitemindex=state.items.findIndex(
-      (item)=>item.id===action.id
-    ); 
-    const existingitem=state.items[existingcartitemindex];
-    const updatetotalamount=state.totalamount-existingitem.price;
-    let updateditems;
-    if (existingitem.quantity===1){
-    updateditems=state.items.filter(item=>item.id!==action.id);
-    }
-    else{
-     const updateditem={...existingitem,quantity:existingitem.quantity-1};
-     updateditems=[...state.items];
-     updateditems[existingcartitemindex]=updateditem;
-    }
-    return {
-      items:updateditems,
-      totalamount:updatetotalamount
-    }
-  }
-  
-
- return defaultcartState;
-}
-const calculateremainingtime=(expirationtime)=>{
-  const currenttime=new Date().getTime();
-  const adjustExpirationtime=new Date(expirationtime).getTime();
-  const remainingduration=adjustExpirationtime-currenttime;
-  return remainingduration;
-}
 const CartProvider = (props) => {
-  const [cartstate, dispatchcartaction] = useReducer(cartReducer, defaultcartState)
-  const initialtoken=localStorage.getItem('token');
+  const [additem, setadditem] = useState([])
+  const [totalamount, settotalamount] = useState(0);
+  const [quantity, setquantity] = useState(0)
  
- 
-  const [token,settoken]=useState(initialtoken);
-  
-  
-  const userIsLoggedIn=!!token;
-  
+  const initialtoken = localStorage.getItem("token");
 
-  
-  const logouthandler=()=>{
+  const [token, settoken] = useState(initialtoken);
+
+  const userIsLoggedIn = !!token;
+  let email=localStorage.getItem('emailtoken')
+  useEffect(() => {
     
-    
-    settoken(null)
-    localStorage.removeItem('token');
-    localStorage.removeItem('token');
-   
-    
-    
-    
-  }
-  const loginhandler=(token,emailtoken,expirationtime)=>{
-   
-      settoken(token);
-      localStorage.setItem('token',token);
-      localStorage.setItem('emailtoken',emailtoken);
-      
-      const remainingtime=calculateremainingtime(expirationtime);
-    setTimeout(() => {
-      logouthandler();
-    }, remainingtime);
-      
-  }
-  
-    const additemhandler=(item)=>{
-      dispatchcartaction({type:'AddItem',item:item})
-      
-    }
-    const removeitemhandler=(id)=>{
-      dispatchcartaction({type:'remove',id:id})
+    const fetch=async ()=>{
+      try{
+        const response =await axios.get(`https://crudcrud.com/api/e5d98d9415d040258c9d0131be2e5c4a/${email}`);
+        setadditem(response.data)
+      }catch(err){
+
+      }
 
     }
+    fetch();
+  
     
-    const cartContext={
-        items:cartstate.items,
-        totalamount:cartstate.totalamount,
-        additem:additemhandler,
-        removeitem:removeitemhandler,
-        message:"Click Here",
-        
-        isLoggedIn:userIsLoggedIn,
-        login:loginhandler,
-        logout:logouthandler,
+  }, [email])
+  useEffect(() => {
+    let updateAmount = 0;
+    let updateQuantity = 0;
+
+    additem.forEach((item) => {
+      // console.log("hii");
+      updateAmount += Number(item.price);
+      updateQuantity += Number(item.quantity);
+    });
+    
+    settotalamount(updateAmount);
+    setquantity(updateQuantity);
+  }, [additem]);
+  
+ 
+  
+
+  const logouthandler = () => {
+    settoken(null);
+    localStorage.removeItem("token");
+    localStorage.removeItem("emailtoken");
+  };
+  const loginhandler = (token, emailtoken, expirationtime) => {
+    settoken(token);
+    localStorage.setItem("token", token);
+    localStorage.setItem("emailtoken", emailtoken);
+
+    
+  }
+
+  const additemhandler =async (item) => {
+    try{
+      const existingitemindex=additem.findIndex(
+        (items)=>items.title===item.title
+      )
+      const existingitem=additem[existingitemindex]
+      console.log(existingitem)
+    const email=localStorage.getItem('emailtoken')
+    if(existingitem){
+      const updateditem={
+        ...existingitem,
+        quantity:existingitem.quantity+item.quantity
+      }
+      
+      await axios.put(`https://crudcrud.com/api/e5d98d9415d040258c9d0131be2e5c4a/${email}/${existingitem._id}`,
+      {...updateditem,_id:undefined});
+      
+    setadditem((previtem)=>(previtem.map((cartitem)=>(cartitem.title===item.title?updateditem:cartitem))))
+    }
+    else{
+      const post=await axios.post(`https://crudcrud.com/api/e5d98d9415d040258c9d0131be2e5c4a/${email}`,
+      item );
+      setadditem((previtem)=>([...previtem,post.data]))
+      console.log(post.data)
+      
+    }
+    settotalamount((prev)=>prev+item.price)
+      setquantity((prev)=>prev+item.quantity)
+  }catch(err){
+   console.log(err)
+   alert(err.message)
+  }
+  }
+    
+  const removeitemhandler = async (item) => {
+    
+      
+      const existingitemindex=additem.findIndex(
+        (items)=>items.id===item.id
+      )
+      try{
+      let updateditems;
+      const existingitem=additem[existingitemindex]
+      console.log(existingitem)
+      const email=localStorage.getItem('emailtoken')
+      if(existingitem.quantity===1){
+        const response=await axios.delete(`https://crudcrud.com/api/e5d98d9415d040258c9d0131be2e5c4a/${email}/${existingitem._id}`);
+       //setadditem((previtem)=>previtem.filter((item1)=>item1.title!==item.title))
+        console.log(response.data)
+       updateditems=additem.filter((items)=>items.id!==item.id)
        
+      }
+      else{
+        const updateditem={
+          ...existingitem,
+          quantity:existingitem.quantity-1
+        }
+        
+      await axios.put(`https://crudcrud.com/api/e5d98d9415d040258c9d0131be2e5c4a/${email}/${existingitem._id}`,
+        {...updateditem,_id:undefined});
+        
+      setadditem((previtem)=>(previtem.map((cartitem)=>(cartitem.title===item.title?updateditem:cartitem))))
+      updateditems = [...additem];
+      updateditems[existingitemindex] = updateditem;
+    
+        
+      }
+      settotalamount((prev)=>prev-item.price)
+      setquantity((prev)=>prev-item.quantity)
+      setadditem(updateditems);
+      
+      
+    }catch(err){
+    alert(err.message)
+    }
+    
+    
+  };
 
-    };
+  const cartContext = {
+    quantity:quantity,
+    items:additem, 
+    totalamount:totalamount,
+    additem: additemhandler,
+    removeitem: removeitemhandler,
+    message: "Click Here",
+   
+  
+
+    isLoggedIn: userIsLoggedIn,
+    login: loginhandler,
+    logout: logouthandler,
+    
+  };
   return (
-    <CartContext.Provider value={cartContext }>
-     {props.children}
+    <CartContext.Provider value={cartContext}>
+      {props.children}
+      
     </CartContext.Provider>
-  )
-}
+  );
+};
 
 export default CartProvider;

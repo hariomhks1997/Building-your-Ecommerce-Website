@@ -5,12 +5,14 @@ import Model from '../UI/Model';
 
 const CartItem = (props) => {
     const cartctx = useContext(CartContext)
+    console.log(cartctx.items)
     
     const cartitems=cartctx.items.map((item)=>(
       
-        <CartItemShown key={item.id} title={item.title} price={item.price} image={item.image} quantity={item.quantity} remove={item.id} ></CartItemShown>
+        <CartItemShown key={item.id} title={item.title} price={item.price} image={item.image} quantity={item.quantity} remove={item} id={item.id} ></CartItemShown>
           
     ))
+  
     const totalamount= cartctx.totalamount.toFixed(2);
   return (
     <Model onClick={props.hide} >
@@ -28,7 +30,7 @@ const CartItem = (props) => {
       <h2 style={{marginLeft:'6rem'}}>Price</h2>
       </div>
         <div style={{listStyle:'none',margin:'0',padding:'0',maxHeight:'20rem',overflow:'scroll'}}>
-    {cartitems}
+  {cartitems} 
     
     </div>
     

@@ -42,7 +42,7 @@ const InputItems = () => {
   <Card >
     {productsArr.map((item)=>(
         
-        <InputForm  title={item.title} price={item.price} image={item.imageUrl}></InputForm>
+        <InputForm key={Math.random().toString()} title={item.title} price={item.price} image={item.imageUrl}></InputForm>
         
       
     ))}
