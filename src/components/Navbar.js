@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext} from "react";
 import classes from "./Navbar.module.css";
 import Cart from "./Cart/Cart";
 import CartContext from "../Store/Cart-context";

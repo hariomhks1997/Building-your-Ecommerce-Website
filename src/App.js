@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar";
 import InputItems from "./components/Itemstore/InputItems";
 import CartItem from "./components/Cart/CartItem";
 
-import {BrowserRouter as Main,Route,Routes} from 'react-router-dom';
+import {Route,Routes} from 'react-router-dom';
 import Home from "./Home";
 import About from "./About";
 import LoginForm from "./components/Itemstore/LoginForm";
@@ -30,8 +30,8 @@ const cartctx = useContext(CartContext)
      
       
       
+      <div>
       
-      <Main>
       <Navbar shown={shownhandler}></Navbar>
       <hr></hr>
      { shown && <CartItem hide={hidehandler}></CartItem>}
@@ -43,8 +43,8 @@ const cartctx = useContext(CartContext)
     
       
       </Routes>
-      </Main>
       
+      </div>
     
     
   );

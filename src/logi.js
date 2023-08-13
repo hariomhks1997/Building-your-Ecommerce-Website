@@ -169,3 +169,23 @@ const CartProvider = (props) => {
 };
 
 export default CartProvider;
+<label>Tshirt name</label>
+<select>
+  <option>Navy Blue Shirt </option>
+  <option>Spary Jeans</option>
+  <option>Gucci Shirt</option>
+</select>
+<label>Description</label>
+<select>
+  <option>100%cotton</option>
+  <option>70:30% Cotton:Silk</option>
+</select>
+<label>Price</label>
+<select>
+  <option>2000</option>
+  <option>3000</option>
+  <option>2000</option>
+</select>
+<label>Quantity Avaliable</label>
+<lable>L</lable>
+<input></input>

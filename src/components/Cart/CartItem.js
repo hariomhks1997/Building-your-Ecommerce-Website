@@ -9,9 +9,10 @@ const CartItem = (props) => {
     
     const cartitems=cartctx.items.map((item)=>(
       
-        <CartItemShown key={item.id} title={item.title} price={item.price} image={item.image} quantity={item.quantity} remove={item} id={item.id} ></CartItemShown>
+        <CartItemShown key={item.id} title={item.title} price={item.rate} image={item.image} quantity={item.quantity} remove={item} id={item.id} ></CartItemShown>
           
     ))
+    console.log(cartctx)
   
     const totalamount= cartctx.totalamount.toFixed(2);
   return (
@@ -38,4 +39,4 @@ const CartItem = (props) => {
   )
 }
 
-export default CartItem
+export default CartItem;

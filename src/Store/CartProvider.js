@@ -18,7 +18,7 @@ const CartProvider = (props) => {
     
     const fetch=async ()=>{
       try{
-        const response =await axios.get(`https://crudcrud.com/api/e5d98d9415d040258c9d0131be2e5c4a/${email}`);
+        const response =await axios.get(`https://crudcrud.com/api/c8147409afd64001a65982e7d4a70eb1/${email}`);
         setadditem(response.data)
       }catch(err){
 
@@ -35,7 +35,7 @@ const CartProvider = (props) => {
 
     additem.forEach((item) => {
       // console.log("hii");
-      updateAmount += Number(item.price);
+      updateAmount = Number(item.rate)*item.quantity;
       updateQuantity += Number(item.quantity);
     });
     
@@ -60,9 +60,11 @@ const CartProvider = (props) => {
   }
 
   const additemhandler =async (item) => {
+    console.log(item)
+
     try{
       const existingitemindex=additem.findIndex(
-        (items)=>items.title===item.title
+        (items)=>(items.title===item.title) && (items.description1===item.description1)
       )
       const existingitem=additem[existingitemindex]
       console.log(existingitem)
@@ -70,30 +72,32 @@ const CartProvider = (props) => {
     if(existingitem){
       const updateditem={
         ...existingitem,
-        quantity:existingitem.quantity+item.quantity
+      quantity:existingitem.quantity+item.quantity,
+        
+
       }
       
-      await axios.put(`https://crudcrud.com/api/e5d98d9415d040258c9d0131be2e5c4a/${email}/${existingitem._id}`,
+      await axios.put(`https://crudcrud.com/api/c8147409afd64001a65982e7d4a70eb1/${email}/${existingitem._id}`,
       {...updateditem,_id:undefined});
       
     setadditem((previtem)=>(previtem.map((cartitem)=>(cartitem.title===item.title?updateditem:cartitem))))
     }
     else{
-      const post=await axios.post(`https://crudcrud.com/api/e5d98d9415d040258c9d0131be2e5c4a/${email}`,
+      const post=await axios.post(`https://crudcrud.com/api/c8147409afd64001a65982e7d4a70eb1/${email}`,
       item );
       setadditem((previtem)=>([...previtem,post.data]))
-      console.log(post.data)
+      
       
     }
-    settotalamount((prev)=>prev+item.price)
+    settotalamount((prev)=>prev+item.rate)
       setquantity((prev)=>prev+item.quantity)
   }catch(err){
    console.log(err)
-   alert(err.message)
+   
   }
   }
     
-  const removeitemhandler = async (item) => {
+  const removeitemhandler = async (item,type) => {
     
       
       const existingitemindex=additem.findIndex(
@@ -104,8 +108,8 @@ const CartProvider = (props) => {
       const existingitem=additem[existingitemindex]
       console.log(existingitem)
       const email=localStorage.getItem('emailtoken')
-      if(existingitem.quantity===1){
-        const response=await axios.delete(`https://crudcrud.com/api/e5d98d9415d040258c9d0131be2e5c4a/${email}/${existingitem._id}`);
+      if(existingitem.quantity===1 ||existingitem.quantity===0 ){
+        const response=await axios.delete(`https://crudcrud.com/api/c8147409afd64001a65982e7d4a70eb1/${email}/${existingitem._id}`);
        //setadditem((previtem)=>previtem.filter((item1)=>item1.title!==item.title))
         console.log(response.data)
        updateditems=additem.filter((items)=>items.id!==item.id)
@@ -114,10 +118,12 @@ const CartProvider = (props) => {
       else{
         const updateditem={
           ...existingitem,
-          quantity:existingitem.quantity-1
+          quantity:existingitem.quantity-1,
+      
+        
         }
         
-      await axios.put(`https://crudcrud.com/api/e5d98d9415d040258c9d0131be2e5c4a/${email}/${existingitem._id}`,
+      await axios.put(`https://crudcrud.com/api/c8147409afd64001a65982e7d4a70eb1/${email}/${existingitem._id}`,
         {...updateditem,_id:undefined});
         
       setadditem((previtem)=>(previtem.map((cartitem)=>(cartitem.title===item.title?updateditem:cartitem))))
@@ -126,7 +132,7 @@ const CartProvider = (props) => {
     
         
       }
-      settotalamount((prev)=>prev-item.price)
+      settotalamount((prev)=>prev-item.rate)
       setquantity((prev)=>prev-item.quantity)
       setadditem(updateditems);
       

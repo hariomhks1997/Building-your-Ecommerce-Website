@@ -1,56 +1,24 @@
-import React from "react";
+import React, { memo,useContext } from "react";
 import InputForm from "./InputForm";
 import Card from "../UI/Card";
-const productsArr = [
-  {
-    title: "Colors",
-
-    price: 100,
-
-    imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%201.png",
-  },
-
-  {
-    title: "Black and white Colors",
-
-    price: 50,
-
-    imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%202.png",
-  },
-
-  {
-    title: "Yellow and Black Colors",
-
-    price: 70,
-
-    imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%203.png",
-  },
-
-  {
-    title: "Blue Color",
-
-    price: 100,
-
-    imageUrl: "https://prasadyash2411.github.io/ecom-website/img/Album%204.png",
-  },
-];
+import InputCart1 from "./InputCart1";
+import CartContext from "../../Store/Cart-context";
 
 const InputItems = () => {
-  return (
-    
-    
-  <Card >
-    {productsArr.map((item)=>(
-        
-        <InputForm key={Math.random().toString()} title={item.title} price={item.price} image={item.imageUrl}></InputForm>
-        
-      
-    ))}
-   
-   
-  </Card>
+  const cartctx = useContext(CartContext)
+  console.log(cartctx)
+  const product=cartctx.items.map((item)=>(
+    <InputCart1 item={item.title} price={item.rate} description={item.description1}></InputCart1>
+  ))
+ 
   
-  )
+  return <Card>
+    <InputForm></InputForm>
+    <div style={{background:'pink',height:'30rem',marginTop:'5rem',maxHeight:'20rem',overflow:'scroll',width:'100%'}}>
+    {product}
+    </div>
+    
+    </Card>;
 };
 
-export default InputItems;
+export default memo(InputItems);
